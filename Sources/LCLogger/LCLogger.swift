@@ -72,19 +72,19 @@ private struct Place {
     let value: String
     let type: String
     
+    var rawValue: String { value + type }
+    var icon: String { Icon.allCases.first(where: { value.lowercased().contains($0.rawValue.lowercased()) } )?.icon ?? "===" }
+    
     var prefix: String {
-        let icon = Icon.allCases.first(where: { value.lowercased().contains($0.rawValue.lowercased()) } )?.icon ?? "==="
-        var length = icon.count + value.count + 5
+        var length = icon.count + rawValue.count + 5
         if icon == "===" { length -= 1 }
         let spacesCount = max(50 - length, 1)
-        let text = String(format: " %@ %@%@%@===", icon, value, type, String(repeating: " ", count: spacesCount))
+        let text = String(format: " %@ %@%@===", icon, rawValue, String(repeating: " ", count: spacesCount))
         return text
     }
     
     var smallPrefix: String {
-        let icon = Icon.allCases.first(where: { value.lowercased().contains($0.rawValue.lowercased()) } )?.icon ?? "==="
-        let text = String(format: " %@ %@%@ ===", icon, value, type)
-        return text
+        String(format: " %@ %@ ===", icon, rawValue)
     }
     
     enum Icon: String, CaseIterable {
