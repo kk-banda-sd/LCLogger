@@ -15,7 +15,6 @@ public final class LCLogger {
     private init() {}
     
     public func construct(_ message: String = "", type: String = "", filePath: String = #file) {
-        let type = type.isEmpty ? "" : "(\(type))"
         let place = filePath.getPlace(type: type)
         let m = String(format: "%.3d   INIT \(place.prefix)", getInitCount())
         let message = m + (message.isEmpty ? "" : " (" + message + ")")
@@ -23,7 +22,6 @@ public final class LCLogger {
     }
     
     public func destruct(_ message: String = "", type: String = "", filePath: String = #file) {
-        let type = type.isEmpty ? "" : "(\(type))"
         let place = filePath.getPlace(type: type)
         let m = String(format: "%.3d DEINIT \(place.prefix)", getDeinitCount())
         let message = m + (message.isEmpty ? "" : " (" + message + ")")
@@ -31,7 +29,6 @@ public final class LCLogger {
     }
     
     public func log(_ message: String, type: String = "", filePath: String = #file) {
-        let type = type.isEmpty ? "" : "(\(type))"
         let place = filePath.getPlace(type: type)
         let message = "\(currentTime) ===" + place.smallPrefix + " " + message + " ==="
         outputStream.write(message)
@@ -80,13 +77,13 @@ private struct Place {
         var length = icon.count + value.count + 5
         if icon == "===" { length -= 1 }
         let spacesCount = max(50 - length, 1)
-        let text = String(format: " %@ %@%@===", icon, value, String(repeating: " ", count: spacesCount))
+        let text = String(format: " %@ %@%@%@===", icon, value, type, String(repeating: " ", count: spacesCount))
         return text
     }
     
     var smallPrefix: String {
         let icon = Icon.allCases.first(where: { value.lowercased().contains($0.rawValue.lowercased()) } )?.icon ?? "==="
-        let text = String(format: " %@ %@ ===", icon, value)
+        let text = String(format: " %@ %@%@ ===", icon, value, type)
         return text
     }
     
@@ -167,5 +164,8 @@ private extension String {
         return string
     }
     
-    func getPlace(type: String) -> Place { Place(value: lastPathComponent.fileName, type: type) }
+    func getPlace(type: String) -> Place {
+        let type = type.isEmpty ? "" : "(\(type))"
+        return Place(value: lastPathComponent.fileName, type: type)
+    }
 }
