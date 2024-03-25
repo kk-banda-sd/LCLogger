@@ -1,12 +1,12 @@
 import Foundation
 
-protocol LCLoggerErrorProtocol {
+public protocol LCLoggerErrorProtocol {
     var errorDescription: String { get }
 }
 
-final class LCLogger {
+public final class LCLogger {
     
-    static let shared = LCLogger()
+    public static let shared = LCLogger()
     
     private var outputStream = OutputStream()
     private var countOfInit = 0
@@ -14,22 +14,22 @@ final class LCLogger {
     
     private init() {}
     
-    func construct(_ message: String = "", filePath: String = #file) {
+    public func construct(_ message: String = "", filePath: String = #file) {
         let m = String(format: "%.3d   INIT \(filePath.place.prefix)", getInitCount())
         let message = m + (message.isEmpty ? "" : " (" + message + ")")
         outputStream.write(message)
     }
     
-    func log(_ message: String, filePath: String = #file) {
+    public func log(_ message: String, filePath: String = #file) {
         let message = "\(currentTime) ===" + filePath.place.smallPrefix + " " + message + " ==="
         outputStream.write(message)
     }
     
-    func log(_ error: LCLoggerErrorProtocol, filePath: String = #file) {
+    public func log(_ error: LCLoggerErrorProtocol, filePath: String = #file) {
         log("‼️ Error: \(error.errorDescription)", filePath: filePath)
     }
     
-    func destruct(_ message: String = "", filePath: String = #file) {
+    public func destruct(_ message: String = "", filePath: String = #file) {
         let m = String(format: "%.3d DEINIT \(filePath.place.prefix)", getDeinitCount())
         let message = m + (message.isEmpty ? "" : " (" + message + ")")
         outputStream.write(message)
