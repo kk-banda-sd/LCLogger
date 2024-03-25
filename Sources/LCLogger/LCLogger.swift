@@ -37,6 +37,10 @@ public final class LCLogger {
     public func log(_ error: LCLoggerErrorProtocol, type: String = "", filePath: String = #file) {
         log("‼️ Error: \(error.errorDescription)", type: type, filePath: filePath)
     }
+    
+    public func log(_ error: Error, type: String = "", filePath: String = #file) {
+        log("‼️ Error: \(error.localizedDescription)", type: type, filePath: filePath)
+    }
 }
 
 // MARK: - Private Methods
