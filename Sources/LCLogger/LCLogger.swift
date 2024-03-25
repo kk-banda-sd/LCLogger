@@ -1,6 +1,8 @@
 import Foundation
 
-let lcLogger = LCLogger.shared
+protocol LCLoggerErrorProtocol {
+    var errorDescription: String { get }
+}
 
 final class LCLogger {
     
@@ -23,8 +25,8 @@ final class LCLogger {
         outputStream.write(message)
     }
     
-    func log(_ error: APIError, filePath: String = #file) {
-        log("‼️ Error: \(error.message ?? error.localizedDescription)", filePath: filePath)
+    func log(_ error: LCLoggerErrorProtocol, filePath: String = #file) {
+        log("‼️ Error: \(error.errorDescription)", filePath: filePath)
     }
     
     func destruct(_ message: String = "", filePath: String = #file) {
@@ -139,9 +141,9 @@ private extension String {
         }
     }
     
-//    var deletingPathExtension: String {
-//        return NSString(string: self).deletingPathExtension
-//    }
+    var deletingPathExtension: String {
+        return NSString(string: self).deletingPathExtension
+    }
     
     var fileName: String {
         let parts = deletingPathExtension.components(separatedBy: ".")

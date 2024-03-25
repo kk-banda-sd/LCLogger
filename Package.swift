@@ -7,7 +7,8 @@ let package = Package(
     name: "LCLogger",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v12)
+        .iOS(.v12),
+        .watchOS(.v9)
     ],
     products: [
         .library(
