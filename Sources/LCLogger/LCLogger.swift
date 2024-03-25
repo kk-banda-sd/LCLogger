@@ -16,21 +16,24 @@ public final class LCLogger {
     
     public func construct(_ message: String = "", type: String = "", filePath: String = #file) {
         let type = type.isEmpty ? "" : "(\(type))"
-        let m = String(format: "%.3d   INIT \(filePath.place.prefix)\(type)", getInitCount())
+        let place = filePath.getPlace(type: type)
+        let m = String(format: "%.3d   INIT \(place.prefix)", getInitCount())
         let message = m + (message.isEmpty ? "" : " (" + message + ")")
         outputStream.write(message)
     }
     
     public func destruct(_ message: String = "", type: String = "", filePath: String = #file) {
         let type = type.isEmpty ? "" : "(\(type))"
-        let m = String(format: "%.3d DEINIT \(filePath.place.prefix)\(type)", getDeinitCount())
+        let place = filePath.getPlace(type: type)
+        let m = String(format: "%.3d DEINIT \(place.prefix)", getDeinitCount())
         let message = m + (message.isEmpty ? "" : " (" + message + ")")
         outputStream.write(message)
     }
     
     public func log(_ message: String, type: String = "", filePath: String = #file) {
         let type = type.isEmpty ? "" : "(\(type))"
-        let message = "\(currentTime) ===" + filePath.place.smallPrefix + "\(type)" + " " + message + " ==="
+        let place = filePath.getPlace(type: type)
+        let message = "\(currentTime) ===" + place.smallPrefix + " " + message + " ==="
         outputStream.write(message)
     }
     
@@ -70,6 +73,7 @@ private struct OutputStream {
 // MARK: - Place
 private struct Place {
     let value: String
+    let type: String
     
     var prefix: String {
         let icon = Icon.allCases.first(where: { value.lowercased().contains($0.rawValue.lowercased()) } )?.icon ?? "==="
@@ -163,5 +167,5 @@ private extension String {
         return string
     }
     
-    var place: Place { Place(value: lastPathComponent.fileName) }
+    func getPlace(type: String) -> Place { Place(value: lastPathComponent.fileName, type: type) }
 }
