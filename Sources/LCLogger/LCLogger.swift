@@ -14,25 +14,28 @@ public final class LCLogger {
     
     private init() {}
     
-    public func construct(_ message: String = "", filePath: String = #file) {
-        let m = String(format: "%.3d   INIT \(filePath.place.prefix)", getInitCount())
+    public func construct(_ message: String = "", type: String = "", filePath: String = #file) {
+        let type = type.isEmpty ? "" : "(\(type))"
+        let m = String(format: "%.3d   INIT \(filePath.place.prefix)\(type)", getInitCount())
         let message = m + (message.isEmpty ? "" : " (" + message + ")")
         outputStream.write(message)
     }
     
-    public func log(_ message: String, filePath: String = #file) {
-        let message = "\(currentTime) ===" + filePath.place.smallPrefix + " " + message + " ==="
-        outputStream.write(message)
-    }
-    
-    public func log(_ error: LCLoggerErrorProtocol, filePath: String = #file) {
-        log("‼️ Error: \(error.errorDescription)", filePath: filePath)
-    }
-    
-    public func destruct(_ message: String = "", filePath: String = #file) {
-        let m = String(format: "%.3d DEINIT \(filePath.place.prefix)", getDeinitCount())
+    public func destruct(_ message: String = "", type: String = "", filePath: String = #file) {
+        let type = type.isEmpty ? "" : "(\(type))"
+        let m = String(format: "%.3d DEINIT \(filePath.place.prefix)\(type)", getDeinitCount())
         let message = m + (message.isEmpty ? "" : " (" + message + ")")
         outputStream.write(message)
+    }
+    
+    public func log(_ message: String, type: String = "", filePath: String = #file) {
+        let type = type.isEmpty ? "" : "(\(type))"
+        let message = "\(currentTime) ===" + filePath.place.smallPrefix + "\(type)" + " " + message + " ==="
+        outputStream.write(message)
+    }
+    
+    public func log(_ error: LCLoggerErrorProtocol, type: String = "", filePath: String = #file) {
+        log("‼️ Error: \(error.errorDescription)", type: type, filePath: filePath)
     }
 }
 
