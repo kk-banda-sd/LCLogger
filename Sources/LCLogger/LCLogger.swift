@@ -34,8 +34,8 @@ public final class LCLogger {
         outputStream.write(message)
     }
     
-    public func log(_ error: LCLoggerErrorProtocol, type: String = "", filePath: String = #file) {
-        log("‼️ Error: \(error.errorDescription)", type: type, filePath: filePath)
+    public func log(_ lcError: LCLoggerErrorProtocol, type: String = "", filePath: String = #file) {
+        log("‼️ Error: \(lcError.errorDescription)", type: type, filePath: filePath)
     }
     
     public func log(_ error: Error, type: String = "", filePath: String = #file) {
