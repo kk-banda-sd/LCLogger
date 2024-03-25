@@ -108,6 +108,7 @@ private struct Place {
         case otherView = "view"
         case helper
         case button
+        case database
         
         var icon: String {
             switch self {
@@ -130,6 +131,7 @@ private struct Place {
                 case .manager: return "🤖"
                 case .helper: return "🙏"
                 case .button: return "⏺️"
+                case .database: return "📀"
             }
         }
     }
