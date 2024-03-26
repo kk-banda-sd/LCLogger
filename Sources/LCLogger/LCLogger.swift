@@ -107,6 +107,7 @@ private struct Place {
         case coder
         case manager
         case otherView = "view"
+        case cell
         case helper
         case button
         case database
@@ -119,6 +120,7 @@ private struct Place {
                 case .tabBar: return "🗂️"
                 case .rootView: return "📺"
                 case .otherView: return "🏙️"
+                case .cell: return "🏙️"
                 case .viewModel: return "🧠"
                 case .session: return "💼"
                 case .configuration: return "🧾"
