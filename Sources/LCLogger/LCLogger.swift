@@ -115,8 +115,8 @@ private struct Place {
         var icon: String {
             switch self {
                 case .diContainer: return "🫙"
-                case .tabBar: return "🗂️"
                 case .tabBarController, .viewController, .overlayController: return "🎥"
+                case .tabBar: return "🗂️"
                 case .rootView: return "📺"
                 case .otherView: return "🏙️"
                 case .viewModel: return "🧠"
