@@ -6,7 +6,10 @@ public protocol LCLoggerErrorProtocol {
 
 public final class LCLogger {
     
-    private let outputStream: OutputStream
+    public var enabled: Bool = true {
+        didSet { outputStream.enabled = enabled }
+    }
+    private var outputStream: OutputStream
     private var countOfInit = 0
     private var countOfDeinit = 0
     
@@ -75,10 +78,13 @@ private extension LCLogger {
 
 // MARK: - OutputStream
 private struct OutputStream {
+    public var enabled: Bool = true
+    
     let prefix: String?
     let suffix: String?
     
     func write(_ message: String) {
+        guard enabled else { return }
 #if DEBUG
         var message = message
         if let prefix { message = "\(prefix) - \(message)" }
