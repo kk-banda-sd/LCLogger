@@ -6,13 +6,13 @@ public protocol LCLoggerErrorProtocol {
 
 public final class LCLogger {
     
-    public static let shared = LCLogger()
-    
-    private var outputStream = OutputStream()
+    private let outputStream: OutputStream
     private var countOfInit = 0
     private var countOfDeinit = 0
     
-    private init() {}
+    private init(prefix: String?) {
+        outputStream = OutputStream(prefix: prefix)
+    }
     
     public func construct(_ message: String = "", type: String = "", filePath: String = #file) {
         let place = filePath.getPlace(type: type)
@@ -39,6 +39,18 @@ public final class LCLogger {
     }
 }
 
+// MARK: - Shared
+public extension LCLogger {
+    private static func sharedInstance(prefix: String?) -> LCLogger {
+        let instance = LCLogger(prefix: prefix)
+        return instance
+    }
+    
+    static func shared(prefix: String? = nil) -> LCLogger {
+        sharedInstance(prefix: prefix)
+    }
+}
+
 // MARK: - Private Methods
 private extension LCLogger {
     func getInitCount() -> Int {
@@ -60,9 +72,15 @@ private extension LCLogger {
 
 // MARK: - OutputStream
 private struct OutputStream {
+    let prefix: String?
+    
     func write(_ message: String) {
 #if DEBUG
-        print(message)
+        if let prefix {
+            print("\(prefix) - \(message)")
+        } else {
+            print(message)
+        }
 #endif
     }
 }
