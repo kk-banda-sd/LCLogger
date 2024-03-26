@@ -10,8 +10,11 @@ public final class LCLogger {
     private var countOfInit = 0
     private var countOfDeinit = 0
     
-    private init(prefix: String?) {
-        outputStream = OutputStream(prefix: prefix)
+    private init(prefix: String?, suffix: String?) {
+        outputStream = OutputStream(
+            prefix: prefix,
+            suffix: suffix
+        )
     }
     
     public func construct(_ message: String = "", type: String = "", filePath: String = #file) {
@@ -41,13 +44,13 @@ public final class LCLogger {
 
 // MARK: - Shared
 public extension LCLogger {
-    private static func sharedInstance(prefix: String?) -> LCLogger {
-        let instance = LCLogger(prefix: prefix)
+    private static func sharedInstance(prefix: String?, suffix: String?) -> LCLogger {
+        let instance = LCLogger(prefix: prefix, suffix: suffix)
         return instance
     }
     
-    static func shared(prefix: String? = nil) -> LCLogger {
-        sharedInstance(prefix: prefix)
+    static func shared(prefix: String? = nil, suffix: String? = nil) -> LCLogger {
+        sharedInstance(prefix: prefix, suffix: suffix)
     }
 }
 
@@ -73,14 +76,14 @@ private extension LCLogger {
 // MARK: - OutputStream
 private struct OutputStream {
     let prefix: String?
+    let suffix: String?
     
     func write(_ message: String) {
 #if DEBUG
-        if let prefix {
-            print("\(prefix) - \(message)")
-        } else {
-            print(message)
-        }
+        var message = message
+        if let prefix { message = "\(prefix) - \(message)" }
+        if let suffix { message.append(" - \(suffix)") }
+        print(message)
 #endif
     }
 }
