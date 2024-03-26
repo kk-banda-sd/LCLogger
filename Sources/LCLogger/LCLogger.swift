@@ -89,6 +89,7 @@ private struct Place {
     
     enum Icon: String, CaseIterable {
         case diContainer
+        case tabBarController
         case viewController
         case overlayController
         case navigationController
@@ -114,7 +115,8 @@ private struct Place {
         var icon: String {
             switch self {
                 case .diContainer: return "🫙"
-                case .viewController, .overlayController: return "🎥"
+                case .tabBar: return "🗂️"
+                case .tabBarController, .viewController, .overlayController: return "🎥"
                 case .rootView: return "📺"
                 case .otherView: return "🏙️"
                 case .viewModel: return "🧠"
@@ -133,7 +135,6 @@ private struct Place {
                 case .helper: return "🙏"
                 case .button: return "⏺️"
                 case .database: return "📀"
-                case .tabBar: return "🗂️"
             }
         }
     }
