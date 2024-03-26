@@ -82,7 +82,7 @@ private struct OutputStream {
 #if DEBUG
         var message = message
         if let prefix { message = "\(prefix) - \(message)" }
-        if let suffix { message.append(" - \(suffix)") }
+        if let suffix { message.append(" \(suffix)") }
         print(message)
 #endif
     }
