@@ -139,6 +139,7 @@ private struct Place {
         case button
         case database
         case tabBar
+        case node
         
         var icon: String {
             switch self {
@@ -164,6 +165,7 @@ private struct Place {
                 case .helper: return "🙏"
                 case .button: return "⏺️"
                 case .database: return "📀"
+                case .node: return "🏙️"
             }
         }
     }
