@@ -9,8 +9,6 @@ public final class LCLogger {
     public var enabled: Bool = true {
         didSet { outputStream.enabled = enabled }
     }
-    public var messages: [String] { _messages }
-    private var _messages: [String] = []
     private var outputStream: OutputStream
     private var countOfInit = 0
     private var countOfDeinit = 0
@@ -91,7 +89,6 @@ private struct OutputStream {
         var message = message
         if let prefix { message = "\(prefix) - \(message)" }
         if let suffix { message.append(" \(suffix)") }
-        _messages.append(message)
         print(message)
 #endif
     }
