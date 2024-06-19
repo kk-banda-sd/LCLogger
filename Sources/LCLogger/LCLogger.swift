@@ -34,9 +34,9 @@ public final class LCLogger {
         outputStream.write(message)
     }
     
-    public func log(_ message: String, type: String = "", filePath: String = #file) {
+    public func log(_ message: Any, type: String = "", filePath: String = #file) {
         let place = filePath.getPlace(type: type)
-        let message = "\(currentTime) ===" + place.smallPrefix + " " + message + " ==="
+        let message = "\(currentTime) ===" + place.smallPrefix + " " + "\(message)" + " ==="
         outputStream.write(message)
     }
     
