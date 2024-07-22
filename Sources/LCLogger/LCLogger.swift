@@ -35,13 +35,13 @@ public final class LCLogger {
     }
     
     public func log(_ message: Any, type: String = "", filePath: String = #file) {
-        let place = filePath.getPlace(type: type)
-        let message = "\(currentTime) ===" + place.smallPrefix + " " + "\(message)" + " ==="
-        outputStream.write(message)
-    }
-    
-    public func log(_ error: Error, type: String = "", filePath: String = #file) {
-        log("‼️ Error: \((error as? LCLoggerErrorProtocol)?.errorDescription ?? error.localizedDescription)", type: type, filePath: filePath)
+        if let error = message as? Error {
+            log("‼️ Error: \((error as? LCLoggerErrorProtocol)?.errorDescription ?? error.localizedDescription)", type: type, filePath: filePath)
+        } else {
+            let place = filePath.getPlace(type: type)
+            let message = "\(currentTime) ===" + place.smallPrefix + " " + "\(message)" + " ==="
+            outputStream.write(message)
+        }
     }
 }
 
