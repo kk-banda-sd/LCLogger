@@ -55,7 +55,11 @@ public final class LCLogger {
         } else {
             errorMessage = error.localizedDescription
         }
-        let message = "‼️ Error: \(errorMessage)"
+        self.error(errorMessage, type: type, filePath: filePath, line: line)
+    }
+    
+    public func error(_ error: String, type: String = "", filePath: String = #file, line: Int = #line) {
+        let message = "‼️ Error: \(error)"
         log(message, type: type, filePath: filePath, line: line)
     }
     

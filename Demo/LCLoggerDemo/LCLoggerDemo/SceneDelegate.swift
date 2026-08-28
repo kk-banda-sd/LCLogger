@@ -30,6 +30,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         lcLogger.spacer()
         lcLogger.destruct()
         lcLogger.warning("Test")
+        lcLogger.error("Test")
+        lcLogger.error(NSError(domain: "Test", code: 1))
         
         func randomString(length: Int) -> String {
           let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
